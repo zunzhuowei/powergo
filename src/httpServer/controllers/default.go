@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 )
 
@@ -21,6 +22,14 @@ func (This *MainController) UserList() {
 }
 
 func (This *MainController) UserListApi() {
+	This.Data["name"] = "张三"
+	This.Data["tel"] = "1234564323"
+	This.Ctx.WriteString("hello")
+}
+
+func (This *MainController) UserListApi2() {
+	var id string = This.Ctx.Input.Param(":id")
+	fmt.Println(id)
 	This.Data["name"] = "张三"
 	This.Data["tel"] = "1234564323"
 	This.Ctx.WriteString("hello")
