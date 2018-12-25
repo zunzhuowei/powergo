@@ -83,13 +83,13 @@
   <footer>
     <div class="author">
       Official website:
-      <a href="http://{{.Website}}">{{.Website}}</a> /
+      <a href="http://{{.Website}}">{{.name}}</a> /
       Contact me:
-      <a class="email" href="mailto:{{.Email}}">{{.Email}}</a>
+      <a class="email" href="mailto:{{.tel}}">{{.tel}}</a>
     </div>
   </footer>
   <div class="backdrop"></div>
 
-  <script src="src/httpServer/static/js/reload.min.js"></script>
+  <script src="static/js/reload.min.js"></script>
 </body>
 </html>
