@@ -3,10 +3,16 @@ package main
 import (
 	"fmt"
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	_ "github.com/go-sql-driver/mysql"
 	_ "httpServer/routers"
 	"io/ioutil"
 	"runtime"
 )
+
+func init() {
+	orm.RegisterDataBase("default", "mysql", "dev:dev@tcp(192.168.1.210:3306)/happy_game")
+}
 
 func main() {
 	// tests goroutine and channel
