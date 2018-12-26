@@ -1,8 +1,8 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego/orm"
-	"strconv"
 )
 
 type Memberfides0 struct {
@@ -40,9 +40,24 @@ func (This *Memberfides0) TableName() string {
 	return MemberfidesTableName
 }
 
-func (This *Memberfides0) GetMemberfidesList(start, end int) map[string]interface{} {
-	mem := make(map[string]interface{})
+func (This *Memberfides0) GetMemberfidesList(start, end int) []Memberfides0 {
+	var memberfides []Memberfides0
 
-	orm.NewOrm().Raw("select * from " + This.TableName() + " limit " + strconv.Itoa(start) + "," + strconv.Itoa(end)).QueryRow(&mem)
-	return mem
+	num, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).QueryRows(&memberfides)
+	if err == nil {
+		fmt.Println("user nums: ", num)
+	}
+
+	return memberfides
 }
+
+/*func (This *Memberfides0) GetMemberfidesList(start, end int) []orm.ParamsList {
+	var lists []orm.ParamsList
+
+	num, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).ValuesList(&lists)
+	if err == nil && num > 0 {
+		fmt.Println(lists[0][0]) // slene
+	}
+
+	return lists
+}*/

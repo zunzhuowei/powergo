@@ -11,7 +11,12 @@ import (
 )
 
 func init() {
-	orm.RegisterDataBase("default", "mysql", "dev:dev@tcp(192.168.1.210:3306)/happy_game")
+	err := orm.RegisterDataBase("default", "mysql",
+		"dev:dev@tcp(xxx.xx.xxx.xxx:3306)/happy_game")
+	if err != nil {
+		fmt.Println(err)
+	}
+
 }
 
 func main() {

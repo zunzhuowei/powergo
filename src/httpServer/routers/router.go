@@ -21,6 +21,7 @@ func init() {
 	beego.Router("/api/user/:id([0-9]+)", &controllers.MainController{}, "get:UserListApi2")
 	beego.Router("/api/user2/:id:int", &controllers.MainController{}, "get:UserListApi2")
 	beego.Router("/api/fides/:mid:int", &controllers.Memberfides0Controller{}, "get:GetOneMemberfides")
+	beego.Router("/api/fides/list/:start:int/:end:int", &controllers.Memberfides0Controller{}, "get:GetMemberfidesList")
 
 	ns := beego.NewNamespace("/v1",
 		beego.NSNamespace("/object",
