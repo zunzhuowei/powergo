@@ -28,9 +28,6 @@ func (controller *Memberfides0Controller) GetOneMemberfides() {
 }
 
 func (controller *Memberfides0Controller) GetMemberfidesList() {
-	for k, v := range controller.Ctx.Input.Params() {
-		beego.Debug("Memberfides0Controller key value-----::", k, v)
-	}
 	start, _ := strconv.Atoi(controller.Ctx.Input.Param(":start"))
 	end, _ := strconv.Atoi(controller.Ctx.Input.Param(":end"))
 	memberfide := models.Memberfides0{}

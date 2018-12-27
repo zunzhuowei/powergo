@@ -72,13 +72,18 @@ func loginFilter() *beego.App {
 // 如果采用无状态的,则 校验session key
 func sessionKeyFilter() *beego.App {
 	return beego.InsertFilter("/*", beego.BeforeRouter, func(context *context.Context) {
-		values := context.Request.Form
-		for k, v := range values {
-			beego.Debug("sessionKeyFilter222222222222 key value-----::", k, v)
+		var requestMap map[string][]string = context.Input.Context.Request.Form
+		if requestMap == nil {
+			err := context.Input.Context.Request.ParseForm()
+			if err != nil {
+				beego.Warn("sessionKeyFilter ParseForm ---::", err.Error())
+			}
 		}
 
-		for k, v := range context.Input.Params() {
-			beego.Debug("sessionKeyFilter key value-----::", k, v)
+		values := context.Input.Context.Request.Form // map[string][]string
+		for k, v := range values {
+			beego.Debug("sessionKeyFilter key value-----::", k, v[0])
+
 		}
 	})
 }

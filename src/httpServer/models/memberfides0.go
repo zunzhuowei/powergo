@@ -62,11 +62,13 @@ func (This Memberfides0) GetMemberfidesList(start, end int) []Memberfides0 {
 	sql := "select * from gold_log order by id desc limit ?,?"
 	num, err := o1.Raw(sql, start, end).ValuesList(&lists)
 	if err == nil && num > 0 {
-		/*for k, v := range lists {
+		for k, v := range lists {
 			fmt.Println("vvvvvvvvvvvvvvvvvvvvvv --::", k, v)
-		}*/
+		}
 	} else {
-		fmt.Println(err.Error())
+		if err != nil {
+			fmt.Println(err.Error())
+		}
 	}
 
 	return memberfides
