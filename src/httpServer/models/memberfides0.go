@@ -1,7 +1,7 @@
 package models
 
 import (
-	"fmt"
+	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
@@ -36,22 +36,22 @@ const (
 	MemberfidesTableName string = "memberfides0"
 )
 
-func (This *Memberfides0) TableName() string {
+func (This Memberfides0) TableName() string {
 	return MemberfidesTableName
 }
 
-func (This *Memberfides0) GetMemberfidesList(start, end int) []Memberfides0 {
+func (This Memberfides0) GetMemberfidesList(start, end int) []Memberfides0 {
 	var memberfides []Memberfides0
 
-	num, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).QueryRows(&memberfides)
-	if err == nil {
-		fmt.Println("user nums: ", num)
+	_, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).QueryRows(&memberfides)
+	if err != nil {
+		beego.Error("GetMemberfidesList err ---::", err)
 	}
 
 	return memberfides
 }
 
-/*func (This *Memberfides0) GetMemberfidesList(start, end int) []orm.ParamsList {
+/*func (This Memberfides0) GetMemberfidesList(start, end int) []orm.ParamsList {
 	var lists []orm.ParamsList
 
 	num, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).ValuesList(&lists)

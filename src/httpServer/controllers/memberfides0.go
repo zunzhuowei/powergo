@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"github.com/astaxie/beego"
 	"httpServer/models"
 	"strconv"
@@ -32,10 +31,9 @@ func (controller *Memberfides0Controller) GetMemberfidesList() {
 	start, _ := strconv.Atoi(controller.Ctx.Input.Param(":start"))
 	end, _ := strconv.Atoi(controller.Ctx.Input.Param(":end"))
 	memberfide := models.Memberfides0{}
-	res := (&memberfide).GetMemberfidesList(start, end)
-	beego.Debug("Memberfides0Controller GetMemberfidesList res:", res)
+	res := memberfide.GetMemberfidesList(start, end)
+	//beego.Debug("Memberfides0Controller GetMemberfidesList res:", res)
 	controller.Data["json"] = res
-	fmt.Println(start, end)
 	beego.Debug("Memberfides0Controller GetMemberfidesList start end:", start, end)
 
 	controller.ServeJSON()

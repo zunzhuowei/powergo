@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
@@ -11,13 +12,21 @@ import (
 )
 
 func init() {
-	err := orm.RegisterDataBase("default", "mysql",
-		"dev:dev@tcp(xxx.xx.xxx.xxx:3306)/happy_game")
+	/*err := orm.RegisterDataBase("default", "mysql",
+		username+":"+password+"@tcp("+host+":"+port+")/"+dbname)
 	if err != nil {
 		fmt.Println(err)
-	}
+	}*/
 
 }
+
+var (
+	username string
+	password string
+	host     string
+	port     string
+	dbname   string
+)
 
 func main() {
 	// tests goroutine and channel
@@ -52,10 +61,16 @@ func httpServer() {
 
 	//log
 	//beego.SetLogger("file", `{"filename":"bin/beegoLog/test.log"}`)
-	var str string = string(data)
 
-	fmt.Println(str)
+	var serverJson map[string]interface{}
 
+	err = json.Unmarshal(data, &serverJson)
+	if err != nil {
+		fmt.Println(err.Error())
+		return
+	}
+
+	connectDb(serverJson)
 	//beego.SetLogger("file", str)
 	//beego.BeeLogger.DelLogger("console")
 	//beego.SetLevel(beego.LevelInformational)
@@ -65,4 +80,25 @@ func httpServer() {
 	//beego.SetStaticPath("/static","/src/httpServer/static")
 
 	beego.Run()
+}
+
+func connectDb(serverJson map[string]interface{}) {
+	username = string(serverJson["mysql.username"].(string))
+	password = string(serverJson["mysql.password"].(string))
+	host = string(serverJson["mysql.host"].(string))
+	port = string(serverJson["mysql.port"].(string))
+	dbname = string(serverJson["mysql.dbName"].(string))
+
+	//err := orm.RegisterDataBase("default", "mysql",
+	//	username+":"+password+"@tcp("+host+":"+port+")/"+dbname)
+
+	maxIdle := 30
+	maxConn := 30
+	err := orm.RegisterDataBase("default", "mysql",
+		username+":"+password+"@tcp("+host+":"+port+")/"+dbname+"?charset=utf8",
+		maxIdle, maxConn)
+
+	if err != nil {
+		fmt.Println(err)
+	}
 }
