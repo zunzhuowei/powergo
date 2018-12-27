@@ -12,26 +12,10 @@ import (
 )
 
 func init() {
-	/*err := orm.RegisterDataBase("default", "mysql",
-		username+":"+password+"@tcp("+host+":"+port+")/"+dbname)
-	if err != nil {
-		fmt.Println(err)
-	}*/
-
+	connectDb()
 }
 
-var (
-	username string
-	password string
-	host     string
-	port     string
-	dbname   string
-)
-
 func main() {
-	// tests goroutine and channel
-	//tests.TestChannel()
-	//tests.TestChannel2()
 
 	httpServer()
 }
@@ -62,43 +46,50 @@ func httpServer() {
 	//log
 	//beego.SetLogger("file", `{"filename":"bin/beegoLog/test.log"}`)
 
-	var serverJson map[string]interface{}
-
-	err = json.Unmarshal(data, &serverJson)
-	if err != nil {
-		fmt.Println(err.Error())
-		return
-	}
-
-	connectDb(serverJson)
-	//beego.SetLogger("file", str)
+	beego.SetLogger("file", string(data))
 	//beego.BeeLogger.DelLogger("console")
 	//beego.SetLevel(beego.LevelInformational)
 	//beego.SetLevel(beego.LevelError)
 	beego.SetLogFuncCall(true)
 
-	//beego.SetStaticPath("/static","/src/httpServer/static")
-
 	beego.Run()
 }
 
-func connectDb(serverJson map[string]interface{}) {
-	username = string(serverJson["mysql.username"].(string))
-	password = string(serverJson["mysql.password"].(string))
-	host = string(serverJson["mysql.host"].(string))
-	port = string(serverJson["mysql.port"].(string))
-	dbname = string(serverJson["mysql.dbName"].(string))
+type dbModel struct {
+	username string
+	password string
+	host     string
+	port     string
+	dbname   string
+}
 
-	//err := orm.RegisterDataBase("default", "mysql",
-	//	username+":"+password+"@tcp("+host+":"+port+")/"+dbname)
+func connectDb() {
+	data, err := ioutil.ReadFile("conf/db.json")
+	var dbJson map[string]interface{}
 
-	maxIdle := 30
-	maxConn := 30
-	err := orm.RegisterDataBase("default", "mysql",
-		username+":"+password+"@tcp("+host+":"+port+")/"+dbname+"?charset=utf8",
-		maxIdle, maxConn)
-
+	err = json.Unmarshal(data, &dbJson)
 	if err != nil {
-		fmt.Println(err)
+		fmt.Println(err.Error())
+		return
+	}
+
+	for dbName, v := range dbJson {
+		m := v.(map[string]interface{})
+		username := m["username"].(string)
+		password := m["password"].(string)
+		host := m["host"].(string)
+		port := m["port"].(string)
+		dbname := m["dbName"].(string)
+		maxIdle := m["maxIdle"].(float64)
+		maxConn := m["maxConn"].(float64)
+		err = orm.RegisterDataBase(dbName, "mysql",
+			username+":"+password+"@tcp("+host+":"+port+")/"+dbname+"?charset=utf8",
+			int(maxIdle), int(maxConn))
+		beego.Debug(dbName, v)
+
+		if err != nil {
+			fmt.Println(err)
+			break
+		}
 	}
 }

@@ -1,12 +1,13 @@
 package models
 
 import (
+	"fmt"
 	"github.com/astaxie/beego"
 	"github.com/astaxie/beego/orm"
 )
 
 type Memberfides0 struct {
-	Mid          int
+	Mid          int `orm:"column(mid);pk"` // 设置主键
 	Name         string
 	Btd          string
 	City         string
@@ -32,6 +33,10 @@ type Memberfides0 struct {
 	ActiveAssets int
 }
 
+func init() {
+	orm.RegisterModel(new(Memberfides0))
+}
+
 const (
 	MemberfidesTableName string = "memberfides0"
 )
@@ -43,9 +48,25 @@ func (This Memberfides0) TableName() string {
 func (This Memberfides0) GetMemberfidesList(start, end int) []Memberfides0 {
 	var memberfides []Memberfides0
 
-	_, err := orm.NewOrm().Raw("select * from "+This.TableName()+" limit ?,?", start, end).QueryRows(&memberfides)
+	o := orm.NewOrm()
+
+	_, err := o.Raw("select * from "+This.TableName()+" limit ?,?", start, end).QueryRows(&memberfides)
 	if err != nil {
 		beego.Error("GetMemberfidesList err ---::", err)
+	}
+
+	o1 := orm.NewOrm()
+	o1.Using("log")
+
+	var lists []orm.ParamsList
+	sql := "select * from gold_log order by id desc limit ?,?"
+	num, err := o1.Raw(sql, start, end).ValuesList(&lists)
+	if err == nil && num > 0 {
+		/*for k, v := range lists {
+			fmt.Println("vvvvvvvvvvvvvvvvvvvvvv --::", k, v)
+		}*/
+	} else {
+		fmt.Println(err.Error())
 	}
 
 	return memberfides

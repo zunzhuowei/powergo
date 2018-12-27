@@ -1,0 +1,20 @@
+{
+  "default": {
+    "username": "dev",
+    "password": "dev",
+    "host": "192.168.1.210",
+    "port": "3306",
+    "dbName": "happy_game",
+    "maxIdle": 30,
+    "maxConn": 30
+  },
+  "log": {
+    "username": "dev",
+    "password": "dev",
+    "host": "192.168.1.210",
+    "port": "3306",
+    "dbName": "happy_game_log",
+    "maxIdle": 30,
+    "maxConn": 30
+  }
+}

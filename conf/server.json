@@ -4,10 +4,5 @@
   "MaxSize": 4194304,
   "Daily": true,
   "MaxDays": 0,
-  "Level": 6,
-  "mysql.username": "dev",
-  "mysql.password": "dev",
-  "mysql.host": "192.168.1.210",
-  "mysql.port": "3306",
-  "mysql.dbName": "happy_game"
+  "Level": 6
 }
