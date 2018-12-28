@@ -12,11 +12,11 @@ import (
 )
 
 func init() {
-	connectDb()
+
 }
 
 func main() {
-
+	connectDb()
 	httpServer()
 }
 
@@ -53,14 +53,6 @@ func httpServer() {
 	beego.SetLogFuncCall(true)
 
 	beego.Run()
-}
-
-type dbModel struct {
-	username string
-	password string
-	host     string
-	port     string
-	dbname   string
 }
 
 func connectDb() {
