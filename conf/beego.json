@@ -1,0 +1,8 @@
+{
+  "filename": "bin/beegoLog/test.log",
+  "MaxLines": 0,
+  "MaxSize": 4194304,
+  "Daily": true,
+  "MaxDays": 0,
+  "Level": 6
+}

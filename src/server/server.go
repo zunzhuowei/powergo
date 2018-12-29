@@ -1,4 +1,4 @@
-package main
+package server
 
 import (
 	"github.com/name5566/leaf"
@@ -9,11 +9,7 @@ import (
 	"server/login"
 )
 
-func main() {
-	gameServer()
-}
-
-func gameServer() {
+func GameServer() {
 	lconf.LogLevel = conf.Server.LogLevel
 	lconf.LogPath = conf.Server.LogPath
 	lconf.LogFlag = conf.LogFlag

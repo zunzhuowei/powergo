@@ -1,0 +1,7 @@
+{
+  "enable": {
+    "httpServer": true,
+    "gameServer": true
+  },
+  "aaa": "aaa"
+}

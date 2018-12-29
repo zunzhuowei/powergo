@@ -1,4 +1,4 @@
-package main
+package httpServer
 
 import (
 	"encoding/json"
@@ -15,12 +15,9 @@ func init() {
 
 }
 
-func main() {
+func HttpServer() {
 	connectDb()
-	httpServer()
-}
 
-func httpServer() {
 	defer func() {
 		if err := recover(); err != nil {
 			beego.Alert("recover httpServer err : ", err)
@@ -34,7 +31,7 @@ func httpServer() {
 
 	beego.BConfig.Listen.ServerTimeOut = 10
 
-	data, err := ioutil.ReadFile("conf/server.json")
+	data, err := ioutil.ReadFile("conf/beego.json")
 	if err != nil {
 		return
 	}
