@@ -1,0 +1,8 @@
+安装 goprotobuf
+    从 https://github.com/google/protobuf/releases 获取 Protobuf 编译器 protoc（可下载到 Windows 下的二进制版本）
+    获取 goprotobuf 提供的 Protobuf 编译器插件 protoc-gen-go（被放置于 $GOPATH/bin 下，$GOPATH/bin 应该被加入 PATH 环境变量，以便 protoc 能够找到 protoc-gen-go）
+    go get github.com/golang/protobuf/protoc-gen-go
+    此插件被 protoc 使用，用于编译 .proto 文件为 Golang 源文件，通过此源文件可以使用定义在 .proto 文件中的消息。
+    获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能
+    go get github.com/golang/protobuf/proto
+
