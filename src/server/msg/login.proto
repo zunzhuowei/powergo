@@ -1,0 +1,8 @@
+syntax = "proto2";
+package msg;
+
+message Login {
+    required string sKey = 1;
+    required int32  sCode = 2;
+    required int32  mid = 3;
+}

@@ -55,6 +55,10 @@ func protoBuf(conn net.Conn) {
 		log.Fatal("marshaling error: ", err)
 	}
 
+	//-------------------------------
+	//| len | id | protobuf message |
+	//-------------------------------
+
 	protoBuf := make([]byte, 4+len(data))
 	binary.BigEndian.PutUint16(protoBuf, uint16(len(data)+2)) // len = (id len) + (data len)
 	binary.BigEndian.PutUint16(protoBuf[2:], 0)               // id
@@ -92,7 +96,7 @@ import (
     "log"
     // 辅助库
     "github.com/golang/protobuf/proto"
-    // test.pb.go 的路径
+    // hello.pb.go 的路径
     "example"
 )
 

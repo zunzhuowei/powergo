@@ -6,3 +6,10 @@
     获取 goprotobuf 提供的支持库，包含诸如编码（marshaling）、解码（unmarshaling）等功能
     go get github.com/golang/protobuf/proto
 
+
+protoc --go_out=. msg.proto
+protoc --go_out=. *.proto
+
+
+# google protobuf数据类型
+double,float,int32,int64,uint32,uint64,sint32,sint64,fixed32,fixed64,sfixed32,sfixed64,bool,string,bytes

@@ -1,0 +1,7 @@
+syntax = "proto2";
+package resp;
+
+message loginResp {
+    required bool su = 1;
+    required int32  exp = 2;
+}
